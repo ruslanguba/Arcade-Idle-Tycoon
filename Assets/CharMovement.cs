@@ -9,14 +9,13 @@ public class CharMovement : MonoBehaviour
     [SerializeField] private GameObject pointToMove;
     private Camera mCamera;
     private NavMeshAgent agent;
-    [SerializeField] private bool isMoving = false;
-    private ItemCollector collector;
+    //private ItemCollector collector;
 
     void Start()
     {
         mCamera = Camera.main;
         agent = GetComponent<NavMeshAgent>();
-        collector = GetComponent<ItemCollector>();
+        //collector = GetComponent<ItemCollector>();
     }
 
     void Update()
@@ -34,13 +33,11 @@ public class CharMovement : MonoBehaviour
             if (Physics.Raycast(mCamera.ScreenPointToRay(Input.mousePosition), out hit))
             {
                 pointToMove.transform.position = hit.point;
-                isMoving = true;
             }
         }
         else if (Input.GetMouseButtonUp(0))
         {
             pointToMove.transform.position = transform.position;
-            isMoving = false;
         }
     }
 

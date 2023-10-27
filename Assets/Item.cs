@@ -6,22 +6,21 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public ItemTypes Type;
-    private bool isColected = false;
     private bool isMoving = false;
-    [SerializeField] private Transform depositTransform;
+    [SerializeField] private Transform targetTransform;
 
     private void Update()
     {
-        if (isColected == true)
+        if (isMoving == true)
             MoveToDeposit();
     }
 
-    public void Collect(Transform Banc)
+    public void Transfer(Transform Banc)
     {
         GetComponent<Collider>().enabled = false;
         GetComponent<Rigidbody>().isKinematic = true;
-        depositTransform = Banc;
-        isColected = true;
+        targetTransform = Banc;
+        transform.parent = Banc;
         isMoving = true;
     }
 
@@ -29,10 +28,9 @@ public class Item : MonoBehaviour
     {
         if (isMoving == true)
         {
-            transform.position = Vector3.MoveTowards(transform.position, depositTransform.position, 10 * Time.deltaTime);
-            if (Vector3.Distance(transform.position, depositTransform.position) < 0.1)
+            transform.position = Vector3.MoveTowards(transform.position, targetTransform.position, 10 * Time.deltaTime);
+            if (Vector3.Distance(transform.position, targetTransform.position) < 0.1)
             {
-                transform.parent = depositTransform;
                 isMoving = false;
             }
         }

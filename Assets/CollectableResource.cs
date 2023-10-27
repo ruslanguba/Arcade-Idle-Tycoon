@@ -4,12 +4,11 @@ using UnityEngine;
 
 public class CollectableResource : MonoBehaviour
 {
-
+    public ItemTypes Type;
     [SerializeField] private int maxQuantity;
     [SerializeField] private int currentQuantity;
     [SerializeField] private float respownTime;
     [SerializeField] private ItemSpawn itemSpawner;
-
     private Coroutine collectionCoroutine;
     private Coroutine respawnCoroutine;
 
@@ -19,7 +18,6 @@ public class CollectableResource : MonoBehaviour
     }
     public void StartCollection(float collectSpeed)
     {
-        Debug.Log("StartColection");
         if (currentQuantity > 0)
         {
             if (collectionCoroutine == null)
@@ -31,7 +29,6 @@ public class CollectableResource : MonoBehaviour
 
     public void StopCollection()
     {
-        Debug.Log("StopColection");
         if (collectionCoroutine != null)
         {
             StopCoroutine(collectionCoroutine);
@@ -60,7 +57,7 @@ public class CollectableResource : MonoBehaviour
             if (currentQuantity == 0)
             {
                 StartCoroutine(RespawnResource());
-                GetComponent<CapsuleCollider>().enabled = false;
+                GetComponent<Collider>().enabled = false;
                 foreach (Transform child in transform)
                 {
                     child.gameObject.SetActive(false);
@@ -79,6 +76,6 @@ public class CollectableResource : MonoBehaviour
         {
             child.gameObject.SetActive(true);
         }
-        GetComponent<CapsuleCollider>().enabled = true;
+        GetComponent<Collider>().enabled = true;
     }
 }
