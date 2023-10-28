@@ -6,5 +6,9 @@ public enum ItemTypes
 {
     Wood,
     Stone,
-    Food
+    Food,
+    TreatedWood,
+    TreatedStoun,
+    Water
+
 }

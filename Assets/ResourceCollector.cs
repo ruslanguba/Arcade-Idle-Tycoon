@@ -42,7 +42,7 @@ public class ResourceCollector : MonoBehaviour
         StartCoroutine(TransferItemsWithDelay(depositRequiredItem, itemDeposit));
     }
 
-    private void CollectItem(Item itemToCollect)
+    protected virtual void CollectItem(Item itemToCollect)
     {
         itemToCollect.Transfer(deposit);
         items.Add(itemToCollect);

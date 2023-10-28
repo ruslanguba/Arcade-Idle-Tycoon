@@ -5,8 +5,6 @@ using UnityEngine;
 public class ItemMiner : MonoBehaviour
 {
     [SerializeField] GameObject itemToCreate;
-    [SerializeField] Transform  itemCreateTransform;
-    [SerializeField] Transform firstItemPos;
     [SerializeField] int mineCost;
     [SerializeField] float creationTime;
     private ItemDeposit deposit;
@@ -40,9 +38,14 @@ public class ItemMiner : MonoBehaviour
         Debug.Log("StartMine");
         yield return new WaitForSeconds(creationTime);
         deposit.UzeResourses(mineCost);
-        GameObject newItem = Instantiate(itemToCreate, itemCreateTransform.position, Quaternion.identity);
+        GameObject newItem = Instantiate(itemToCreate, transform.position, Quaternion.identity);
         deposit.CreateItem(newItem.GetComponent<Item>());
         mineItem = null;
+    }
+
+    public void CreationTimeDecreace()
+    {
+        creationTime = creationTime * 0.9f;
     }
  
 }

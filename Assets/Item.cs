@@ -7,7 +7,7 @@ public class Item : MonoBehaviour
 {
     public ItemTypes Type;
     private bool isMoving = false;
-    [SerializeField] private Transform targetTransform;
+    private Transform targetTransform;
 
     private void Update()
     {

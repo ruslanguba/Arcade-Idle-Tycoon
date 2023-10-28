@@ -14,6 +14,7 @@ public class WorkerDoWork : MonoBehaviour
     private NavMeshAgent agent;
     private int miningCount;
     private bool isMining;
+
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -83,7 +84,6 @@ public class WorkerDoWork : MonoBehaviour
                 workCoroutine = null;
             }
         }
-        
     }
 
     private void StartWaitingAtStorage()
@@ -96,5 +96,10 @@ public class WorkerDoWork : MonoBehaviour
         yield return new WaitForSeconds(waitTimeAtStorage);
         GoToResource();
         miningCount = 0;
+    }
+
+    public void UpgradeWorker()
+    {
+        maxMiningCount++;
     }
 }

@@ -5,12 +5,14 @@ using UnityEngine;
 public class BuildingCreator : MonoBehaviour
 {
     public List<ItemTypes> requiredResources = new List<ItemTypes>();
-    [SerializeField] GameObject building;
+    [SerializeField] protected GameObject building;
+    [SerializeField] GameObject buildingBody;
     [SerializeField] int resourcesCount;
     [SerializeField] List<int> requiredResourcesCounts;
-    [SerializeField] ItemInboxStorage storage;
+    [SerializeField] protected ItemInboxStorage storage;
     Coroutine buildingCreation;
 
+    [SerializeField] Dictionary<ItemTypes, int> Required = new Dictionary<ItemTypes, int>();
     private void Start()
     {
         InitializeRequiredResourcesCounts();
@@ -68,7 +70,7 @@ public class BuildingCreator : MonoBehaviour
         }
     }
 
-    private void StartCreation()
+    protected virtual void StartCreation()
     {
         if(buildingCreation == null)
         {
@@ -79,7 +81,7 @@ public class BuildingCreator : MonoBehaviour
     IEnumerator BuildingConstruction()
     {
         building.gameObject.SetActive(true);
-        building.transform.localScale = Vector3.one * 0.1f;
+        buildingBody.transform.localScale = Vector3.one * 0.1f;
         if(building.GetComponent<Collider>() != null )
         {
             building.GetComponent<Collider>().enabled = false;
@@ -89,7 +91,7 @@ public class BuildingCreator : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
             storage.UseItem(i);
-            building.transform.localScale = Vector3.one * i * 0.2f;
+            buildingBody.transform.localScale = Vector3.one * i * 0.2f;
 
         }
 

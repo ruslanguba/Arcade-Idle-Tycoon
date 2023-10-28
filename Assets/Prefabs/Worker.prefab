@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3755464194181896934}
   - component: {fileID: 317203168388680028}
   - component: {fileID: 1793948604627235954}
-  - component: {fileID: 2350905964255465227}
+  - component: {fileID: 9126325628741424338}
   m_Layer: 0
   m_Name: Worker
   m_TagString: Untagged
@@ -104,10 +104,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   resource: {fileID: 0}
   storage: {fileID: 0}
-  miningDelay: 2
-  maxMiningCount: 5
+  miningDelay: 4
+  maxMiningCount: 1
   waitTimeAtStorage: 3
---- !u!114 &2350905964255465227
+--- !u!114 &9126325628741424338
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -116,13 +116,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 20596241174515897}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff3af99fb73d7334791853508c694e62, type: 3}
+  m_Script: {fileID: 11500000, guid: 6a27e263fe2992548ae0d7670348c78a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   maxItems: 2
   currentItems: 0
   deposit: {fileID: 8161405516648139630}
   items: []
+  itemToCollectType: 0
 --- !u!1 &1838423463714972570
 GameObject:
   m_ObjectHideFlags: 0

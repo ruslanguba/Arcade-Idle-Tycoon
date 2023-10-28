@@ -38,6 +38,7 @@ public class ItemAutoCollector : MonoBehaviour
     {
         GameObject worker = Instantiate(workerPrefab, transform.position, Quaternion.identity);
         worker.GetComponent<WorkerDoWork>().SetLocations(transform ,resources[workersCount].transform);
+        worker.GetComponent<WorkerCollector>().SetItemToCollectType(ResourcceTypeToCollect);
         workers.Add(worker.GetComponent<WorkerDoWork>());
         workersCount++;
     }

@@ -7,6 +7,8 @@ public class ItemDeposit : MonoBehaviour
     public ItemTypes reqrequiredItem;
     private ItemMiner itemMiner;
     private ItemStorge storge;
+    private ItemInboxStorage inboxStorage;
+    private ItemOutStorage outStorage;
     [SerializeField] int inCurrentItemCount;
     [SerializeField] int inMaxItemCount;
     [SerializeField] int outCurrentItemCount;
@@ -19,9 +21,17 @@ public class ItemDeposit : MonoBehaviour
             itemMiner = GetComponent<ItemMiner>();
             StartCoroutine(CheckIfCanCreate());
         }
-        if (GetComponent<ItemStorge>() != null)
+        //if (GetComponent<ItemStorge>() != null)
+        //{
+        //    storge = GetComponent<ItemStorge>();
+        //}
+        if (GetComponent<ItemInboxStorage>() != null)
         {
-            storge = GetComponent<ItemStorge>();
+            inboxStorage = GetComponent<ItemInboxStorage>();
+        }
+        if (GetComponent<ItemOutStorage>() != null)
+        {
+            outStorage = GetComponent<ItemOutStorage>();
         }
     }
 
@@ -35,31 +45,19 @@ public class ItemDeposit : MonoBehaviour
     {
         Debug.Log("UseRes"+ count);
         inCurrentItemCount = inCurrentItemCount - count;
-        if (storge != null)
-        {
-            storge.UseItem(count);
-        }
+        inboxStorage.UseItem(count);
     }
 
     public void CreateItem(Item newItem)
     {
         outCurrentItemCount++;
-        storge.MoveNewItem(newItem);
+        GetComponent<ItemOutStorage>().MoveItem(newItem);
     }
 
     public void GetItem(Item inboxItem)
-    {
+    {       
         inCurrentItemCount++;
-        if (storge != null)
-        {
-            storge.ResiveItem(inboxItem);
-        }
-        else if (GetComponent<ItemOutStorage>() != null)
-        {
-            GetComponent<ItemOutStorage>().MoveItem(inboxItem);
-        }
-        else
-            inboxItem.Transfer(transform);
+        inboxStorage.ResiveItem(inboxItem);
     }
 
     IEnumerator CheckIfCanCreate()
