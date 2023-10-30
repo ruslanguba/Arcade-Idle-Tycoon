@@ -5,14 +5,16 @@ using UnityEngine;
 public class BuildingCreator : MonoBehaviour
 {
     public List<ItemTypes> requiredResources = new List<ItemTypes>();
+
     [SerializeField] protected GameObject building;
     [SerializeField] GameObject buildingBody;
-    [SerializeField] int resourcesCount;
-    [SerializeField] List<int> requiredResourcesCounts;
+    [SerializeField] int requiredResourcesCount;
+    [SerializeField] List<int> currentResourcesCounts;
     [SerializeField] protected ItemInboxStorage storage;
     Coroutine buildingCreation;
 
     [SerializeField] Dictionary<ItemTypes, int> Required = new Dictionary<ItemTypes, int>();
+    private Dictionary<ItemTypes, int> requiredItemsDiff = new Dictionary<ItemTypes, int>();
     private void Start()
     {
         InitializeRequiredResourcesCounts();
@@ -24,13 +26,30 @@ public class BuildingCreator : MonoBehaviour
 
     private void InitializeRequiredResourcesCounts()
     {
-        requiredResourcesCounts = new List<int>();
+        currentResourcesCounts = new List<int>();
 
         foreach (ItemTypes itemType in requiredResources)
         {
-            requiredResourcesCounts.Add(0);
+            currentResourcesCounts.Add(0);
         }
     }
+    private void CalculateRequiredItemsDiff()
+    {
+        for (int i = 0; i < requiredResources.Count; i++)
+        {
+            ItemTypes itemType = requiredResources[i];
+            int currentCount = currentResourcesCounts[i];
+            int diff = requiredResourcesCount - currentCount;
+            requiredItemsDiff[itemType] = diff;
+        }
+    }
+
+    public Dictionary<ItemTypes, int> GetRequiredItemsDiff()
+    {
+        CalculateRequiredItemsDiff();
+        return requiredItemsDiff;
+    }
+
 
     public void GetItem(Item item)
     {
@@ -46,7 +65,7 @@ public class BuildingCreator : MonoBehaviour
 
         if (index != -1)
         {
-            requiredResourcesCounts[index]++;
+            currentResourcesCounts[index]++;
             CheckIfCanStartCreation();
         }
     }
@@ -55,9 +74,9 @@ public class BuildingCreator : MonoBehaviour
     {
         bool canStartCreation = true;
 
-        foreach (int requiredCounts in requiredResourcesCounts)
+        foreach (int requiredCounts in currentResourcesCounts)
         {
-            if (requiredCounts < resourcesCount)
+            if (requiredCounts < requiredResourcesCount)
             {
                 canStartCreation = false;
                 break;
@@ -100,5 +119,6 @@ public class BuildingCreator : MonoBehaviour
         {
             building.GetComponent<Collider>().enabled = true;
         }
+        storage.UseItem(1000);
     }
 }

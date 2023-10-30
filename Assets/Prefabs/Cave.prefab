@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1548118765121104949}
+  - component: {fileID: 3720603648108226012}
+  - component: {fileID: 8541253725658163406}
   m_Layer: 0
   m_Name: Cave
   m_TagString: Untagged
@@ -33,6 +35,37 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3720603648108226012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548118765121104946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a0e8bc7e226e014fb1f4b038b3059d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firstPosition: {fileID: 0}
+  offset: 0.7
+--- !u!114 &8541253725658163406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1548118765121104946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 413c2b561d970b94687842237e7eec30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemTypes: 
+  inCurrentItemCount: 0
+  MaxItemCount: 0
+  outCurrentItemCount: 0
+  iMaxItemCount: 0
 --- !u!1 &1548118765197421088
 GameObject:
   m_ObjectHideFlags: 0

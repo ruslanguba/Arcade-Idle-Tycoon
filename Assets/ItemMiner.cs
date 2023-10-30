@@ -36,8 +36,8 @@ public class ItemMiner : MonoBehaviour
     IEnumerator MineItem()
     {
         Debug.Log("StartMine");
-        yield return new WaitForSeconds(creationTime);
         deposit.UzeResourses(mineCost);
+        yield return new WaitForSeconds(creationTime);
         GameObject newItem = Instantiate(itemToCreate, transform.position, Quaternion.identity);
         deposit.CreateItem(newItem.GetComponent<Item>());
         mineItem = null;

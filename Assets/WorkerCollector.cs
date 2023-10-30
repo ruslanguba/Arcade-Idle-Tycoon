@@ -10,7 +10,7 @@ public class WorkerCollector : ResourceCollector
     {
         this.itemToCollectType = type;
     }
-    protected override void CollectItem(Item itemToCollect)
+    public override void CollectItem(Item itemToCollect)
     {
         
         if (itemToCollect.Type == itemToCollectType)

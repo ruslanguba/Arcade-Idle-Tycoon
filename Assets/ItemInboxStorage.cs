@@ -2,57 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemInboxStorage : MonoBehaviour
+public class ItemInboxStorage : StorageBase
 {
-    [SerializeField] Transform firstPosition;
-    [SerializeField] Transform InParrent;
-    [SerializeField] List<Transform> inboxTransforms = new List<Transform>();
-    [SerializeField] List<Vector3> inboxPositions = new List<Vector3>();
-    [SerializeField] List<Item> inboxItems = new List<Item>();
-
-    int index = 0;
-    [SerializeField] int id = 0;
-    void Start()
-    {
-        for (int i = 0; i < 3; i++)
-        {
-            GenerateTransformsForStorge();
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            GenerateTransformsForStorge();
-        }
-    }
-
-    public void GenerateTransformsForStorge()
-    {
-        for (int x = 0; x < 3; x++)
-        {
-            for (int z = 0; z < 3; z++)
-            {
-                GameObject inboxObject = new GameObject(); // Создание нового пустого GameObject
-                inboxPositions.Add(new Vector3(firstPosition.position.x + 0.5f * x, firstPosition.position.y, firstPosition.position.z + 0.5f * z));
-                GameObject InboxPosition = Instantiate(inboxObject, inboxPositions[index], Quaternion.identity, InParrent);
-                inboxTransforms.Add(InboxPosition.transform);
-                index++;
-            }
-        }
-        firstPosition.position = new Vector3(firstPosition.position.x, firstPosition.position.y + 0.5f, firstPosition.position.z);
-    }
+    int id = 0;
 
     public void ResiveItem(Item inboxItem)
     {
-        for (int i = 0; i < inboxTransforms.Count; i++)
+        for (int i = 0; i < transforms.Count; i++)
         {
-            if (inboxTransforms[i].transform.childCount == 0)
+            if (transforms[i].transform.childCount == 0)
             {
-                inboxItem.Transfer(inboxTransforms[i]);
-                inboxItems.Add(inboxItem);
+                inboxItem.Transfer(transforms[i]);
+                items.Add(inboxItem);
                 id++;
                 return;
             }
@@ -66,11 +27,39 @@ public class ItemInboxStorage : MonoBehaviour
             if (id > 0)
             {
                 id--;
-                GameObject ToDestroy = inboxItems[id].gameObject;
-                inboxItems[id].Transfer(transform);
-                inboxItems.RemoveAt(id);
+                GameObject ToDestroy = items[id].gameObject;
+                items[id].Transfer(transform);
+                items.RemoveAt(id);
                 Debug.Log("Resourse Used " + id);
             }
+        }
+    }
+
+    public void TransferItemsToPlayer(ResourceCollector character, ItemTypes type, int itemToTransferCount)
+    {
+        List<Item> itemsToTransfer = new List<Item>();
+        int count = itemToTransferCount;
+        foreach (Item item in items)
+        {
+            if(count >= 0)
+            {
+                if(item.Type == type)
+                {
+                    itemsToTransfer.Add(item);
+                    items.Remove(item);
+                    count--;
+                }
+            }
+        }
+        StartCoroutine(TransferToPlaerCor(character, itemsToTransfer));
+    }
+
+    IEnumerator TransferToPlaerCor(ResourceCollector character, List<Item> itemsToTransfer)
+    {
+        for(int i = 0; i < itemsToTransfer.Count; i++)
+        {
+            character.CollectItem(itemsToTransfer[i]);
+            yield return new WaitForSeconds(0.1f);
         }
     }
 }

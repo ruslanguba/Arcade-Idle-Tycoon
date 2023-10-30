@@ -25,6 +25,11 @@ public class ResourceCollector : MonoBehaviour
         {
             TransferItemsToBuilding(other.GetComponent<BuildingCreator>());
         }
+
+        if(other.GetComponent<MainDeposit>() != null)
+        {
+            other.GetComponent<MainDeposit>().FindCharacter(this);
+        }
     }
 
     private void TryCollectItem(Item item)
@@ -35,22 +40,23 @@ public class ResourceCollector : MonoBehaviour
         }
     }
 
-    private void CheckRequiredResources(GameObject currentObject)
-    {
-        ItemDeposit itemDeposit = currentObject.GetComponent<ItemDeposit>();
-        ItemTypes depositRequiredItem = itemDeposit.reqrequiredItem;
-        StartCoroutine(TransferItemsWithDelay(depositRequiredItem, itemDeposit));
-    }
-
-    protected virtual void CollectItem(Item itemToCollect)
+    public virtual void CollectItem(Item itemToCollect)
     {
         itemToCollect.Transfer(deposit);
         items.Add(itemToCollect);
         currentItems++;
     }
 
+    private void CheckRequiredResources(GameObject currentObject)
+    {
+        ItemDeposit itemDeposit = currentObject.GetComponent<ItemDeposit>();
+        StartCoroutine(TransferItemsWithDelay(itemDeposit));
+    }
+
     private void TransferItemsToBuilding(BuildingCreator buildingCreator)
     {
+        Dictionary<ItemTypes, int> requiredItemsDiff = buildingCreator.GetRequiredItemsDiff();
+
         foreach (ItemTypes itemType in buildingCreator.requiredResources)
         {
             List<Item> itemsToTransfer = new List<Item>();
@@ -59,22 +65,25 @@ public class ResourceCollector : MonoBehaviour
             {
                 if (items[i].Type == itemType)
                 {
-                    itemsToTransfer.Add(items[i]);
+                    if (requiredItemsDiff.ContainsKey(itemType) && requiredItemsDiff[itemType] > 0)
+                    {
+                        itemsToTransfer.Add(items[i]);
+                        requiredItemsDiff[itemType]--;
+                    }
                 }
             }
-
             StartCoroutine(TransferItemToNewBuilding(itemsToTransfer, buildingCreator));
         }
     }
 
-    IEnumerator TransferItemsWithDelay(ItemTypes requiredItem, ItemDeposit itemDeposit)
+    IEnumerator TransferItemsWithDelay(ItemDeposit itemDeposit)
     {
         int count = itemDeposit.requiredResources();
         for (int i = items.Count - 1; i >= 0; i--)
         {
             if (count != 0)
             {
-                if (items[i].Type == requiredItem)
+                if(itemDeposit.itemTypes.Contains(items[i].Type))
                 {
                     itemDeposit.GetItem(items[i]);
                     items.RemoveAt(i);
@@ -94,22 +103,13 @@ public class ResourceCollector : MonoBehaviour
             buildingCreator.IncreaseItemCount(itemsToTransfer[i].Type);
             itemsToTransfer.Remove(itemsToTransfer[i]);
             items.RemoveAt(i);
-            currentItems = items.Count;
+            currentItems--;
             yield return new WaitForSeconds(0.1f);
         }
-    }
-
-    public int GetCapacity()
-    {
-        return maxItems;
     }
 
     public void IncreaseCapacity()
     {
         maxItems++;
-    }
-    public int SetCApacityToWorker()
-    {
-        return this.maxItems;
     }
 }

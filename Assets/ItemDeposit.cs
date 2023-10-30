@@ -4,30 +4,29 @@ using UnityEngine;
 
 public class ItemDeposit : MonoBehaviour
 {
-    public ItemTypes reqrequiredItem;
-    private ItemMiner itemMiner;
-    private ItemStorge storge;
-    private ItemInboxStorage inboxStorage;
-    private ItemOutStorage outStorage;
-    [SerializeField] int inCurrentItemCount;
-    [SerializeField] int inMaxItemCount;
-    [SerializeField] int outCurrentItemCount;
-    [SerializeField] int outMaxItemCount;
+    //public ItemTypes reqrequiredItem;
 
-    private void Start()
+    public List<ItemTypes> itemTypes = new List<ItemTypes>();
+
+    private ItemMiner itemMiner;
+    protected ItemInboxStorage inboxStorage;
+    private ItemOutStorage outStorage;
+    [SerializeField] protected int inCurrentItemCount;
+    [SerializeField] protected int MaxItemCount;
+    [SerializeField] protected int outCurrentItemCount;
+    [SerializeField] protected int iMaxItemCount;
+
+    protected virtual void Start()
     {
         if (GetComponent<ItemMiner>() != null)
         {
             itemMiner = GetComponent<ItemMiner>();
             StartCoroutine(CheckIfCanCreate());
         }
-        //if (GetComponent<ItemStorge>() != null)
-        //{
-        //    storge = GetComponent<ItemStorge>();
-        //}
         if (GetComponent<ItemInboxStorage>() != null)
         {
             inboxStorage = GetComponent<ItemInboxStorage>();
+            Invoke("SetCapaciity", 3);
         }
         if (GetComponent<ItemOutStorage>() != null)
         {
@@ -35,15 +34,19 @@ public class ItemDeposit : MonoBehaviour
         }
     }
 
+    private void SetCapaciity()
+    {
+        MaxItemCount = inboxStorage.StorageMaxCapacity();
+    }
+
     public int requiredResources()
     {
-        int requiredResources = inMaxItemCount - inCurrentItemCount;
+        int requiredResources = MaxItemCount - inCurrentItemCount;
         return requiredResources;
     }
 
     public void UzeResourses(int count)
     {
-        Debug.Log("UseRes"+ count);
         inCurrentItemCount = inCurrentItemCount - count;
         inboxStorage.UseItem(count);
     }
@@ -51,13 +54,18 @@ public class ItemDeposit : MonoBehaviour
     public void CreateItem(Item newItem)
     {
         outCurrentItemCount++;
-        GetComponent<ItemOutStorage>().MoveItem(newItem);
+        outStorage.MoveItem(newItem);
     }
 
-    public void GetItem(Item inboxItem)
+    public virtual void GetItem(Item inboxItem)
     {       
         inCurrentItemCount++;
         inboxStorage.ResiveItem(inboxItem);
+        if(inCurrentItemCount >= inboxStorage.StorageMaxCapacity())
+        {
+            inboxStorage.GenerateTransformsForStorge();
+            SetCapaciity();
+        }
     }
 
     IEnumerator CheckIfCanCreate()

@@ -21,14 +21,21 @@ public class ItemAutoCollector : MonoBehaviour
 
     void Awake()
     {
+        FindResourses();
+    }
+
+    private void FindResourses()
+    {
         Collider[] resourceToCollect = Physics.OverlapSphere(transform.position, 7);
         foreach (Collider collider in resourceToCollect)
         {
             if (collider.gameObject.GetComponent<CollectableResource>() != null)
             {
-                if(collider.gameObject.GetComponent<CollectableResource>().Type == ResourcceTypeToCollect)
+                CollectableResource collectableResource = collider.gameObject.GetComponent<CollectableResource>();
+                if (collectableResource.Type == ResourcceTypeToCollect)
                 {
-                    resources.Add(collider.gameObject.GetComponent<CollectableResource>());
+                    if(!resources.Contains(collectableResource)) // эта проверка нужна на случай если строительсво началось пока один из ресурсов восстанавливался
+                    resources.Add(collectableResource);
                 }
             }
         }
@@ -36,6 +43,7 @@ public class ItemAutoCollector : MonoBehaviour
 
     public void CreateWorker()
     {
+        FindResourses();
         GameObject worker = Instantiate(workerPrefab, transform.position, Quaternion.identity);
         worker.GetComponent<WorkerDoWork>().SetLocations(transform ,resources[workersCount].transform);
         worker.GetComponent<WorkerCollector>().SetItemToCollectType(ResourcceTypeToCollect);
