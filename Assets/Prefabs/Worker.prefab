@@ -72,7 +72,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0.7}
 --- !u!54 &317203168388680028
 Rigidbody:
@@ -123,6 +123,7 @@ MonoBehaviour:
   currentItems: 0
   deposit: {fileID: 8161405516648139630}
   items: []
+  bagCliner: {fileID: 0}
   itemToCollectType: 0
 --- !u!1 &1838423463714972570
 GameObject:
