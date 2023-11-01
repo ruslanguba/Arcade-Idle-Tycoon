@@ -3,21 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemAutoCollector : MonoBehaviour
-{
-    
+{  
     [SerializeField] ItemTypes ResourcceTypeToCollect;
     [SerializeField] GameObject workerPrefab;
     [SerializeField] List<CollectableResource> resources = new List<CollectableResource>();
     [SerializeField] List<WorkerDoWork> workers = new List<WorkerDoWork>();
     private int workersCount;
-
-    private void Update()
-    {
-        if(Input.GetKeyUp(KeyCode.W))
-        {
-            CreateWorker();
-        }
-    }
 
     void Awake()
     {
@@ -34,7 +25,7 @@ public class ItemAutoCollector : MonoBehaviour
                 CollectableResource collectableResource = collider.gameObject.GetComponent<CollectableResource>();
                 if (collectableResource.Type == ResourcceTypeToCollect)
                 {
-                    if(!resources.Contains(collectableResource)) // эта проверка нужна на случай если строительсво началось пока один из ресурсов восстанавливался
+                    if(!resources.Contains(collectableResource))
                     resources.Add(collectableResource);
                 }
             }
@@ -49,20 +40,5 @@ public class ItemAutoCollector : MonoBehaviour
         worker.GetComponent<WorkerCollector>().SetItemToCollectType(ResourcceTypeToCollect);
         workers.Add(worker.GetComponent<WorkerDoWork>());
         workersCount++;
-    }
-
-    public void IncreaceWorkerSpeed()
-    {
-
-    }
-
-    public void IncreaceWorkerCapacity()
-    {
-
-    }
-
-    public void CreateNewWorker()
-    {
-
     }
 }

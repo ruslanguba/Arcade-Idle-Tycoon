@@ -14,9 +14,7 @@ public class SceneInitialiser : MonoBehaviour
             {
                 if (instance == null)
                 {
-                    Debug.Log("instance1");
                     instance = new ResourcesController();
-                    Debug.Log("instance2");
                 }
                 return instance;
             }

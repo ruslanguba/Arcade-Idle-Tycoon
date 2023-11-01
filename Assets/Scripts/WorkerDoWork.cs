@@ -5,11 +5,11 @@ using UnityEngine.AI;
 
 public class WorkerDoWork : MonoBehaviour
 {
-    public Transform resource;  // Ресурс, к которому должен идти работник
-    public Transform storage;   // Склад, куда работник будет переносить ресурсы
-    public float miningDelay = 2.0f; // Задержка перед каждой попыткой добычи
-    public int maxMiningCount = 2;  // Максимальное количество попыток добычи
-    public float waitTimeAtStorage = 3.0f;  // Время ожидания у склада
+    public Transform resource;
+    public Transform storage; 
+    public float miningDelay = 2.0f;
+    public int maxMiningCount = 2;
+    public float waitTimeAtStorage = 3.0f; 
     private Coroutine workCoroutine;
     private NavMeshAgent agent;
     private int miningCount;

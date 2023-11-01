@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1548118765121104949}
   - component: {fileID: 3720603648108226012}
-  - component: {fileID: 8541253725658163406}
   - component: {fileID: 3839262632227934512}
   m_Layer: 0
   m_Name: Cave
@@ -52,25 +51,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstPosition: {fileID: 0}
   offset: 0.7
+  parrent: {fileID: 0}
   transforms: []
   storageCapacity: 0
---- !u!114 &8541253725658163406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1548118765121104946}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 413c2b561d970b94687842237e7eec30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemTypes: 
-  inCurrentItemCount: 0
-  MaxItemCount: 0
-  outCurrentItemCount: 0
-  iMaxItemCount: 0
 --- !u!114 &3839262632227934512
 MonoBehaviour:
   m_ObjectHideFlags: 0

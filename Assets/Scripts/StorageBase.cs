@@ -19,22 +19,13 @@ public abstract class StorageBase : MonoBehaviour
             GenerateTransformsForStorge();
         }
     }
-
-    void Update()
-    {
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            GenerateTransformsForStorge();
-        }
-    }
-
     public void GenerateTransformsForStorge()
     {
         for (int x = 0; x < 3; x++)
         {
             for (int z = 0; z < 3; z++)
             {
-                GameObject inboxObject = new GameObject(); // Создание нового пустого GameObject
+                GameObject inboxObject = new GameObject();
                 positions.Add(new Vector3(firstPosition.position.x + offset * x, firstPosition.position.y, firstPosition.position.z + offset * z));
                 GameObject InboxPosition = Instantiate(inboxObject, positions[storageCapacity], Quaternion.identity, parrent);
                 transforms.Add(InboxPosition.transform);

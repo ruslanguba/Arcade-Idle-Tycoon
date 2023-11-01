@@ -5,7 +5,6 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour
 {
-    private float Speed;
     [SerializeField] private int startMaxCapacity = 10;
     private int currentMaxCapacity;
     public static Action<int> SetPlayerMaxCapacity;

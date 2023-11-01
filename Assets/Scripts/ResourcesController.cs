@@ -27,7 +27,6 @@ public class ResourcesController
     private int PlayerCapacity;
     private void Initialize()
     {
-        //MainDeposit.ResourseCountChanged += StorageGetItem;
         CharacterStats.SetPlayerMaxCapacity += SetPlayerMaxCapacity;
 
         foreach (ItemTypes itemType in Enum.GetValues(typeof(ItemTypes)))
@@ -42,18 +41,6 @@ public class ResourcesController
     {
         PlayerCapacity = capacity;
     }
-
-    //public void SetStorageCount(ItemTypes itemType, int count)
-    //{
-    //    if (storageCounts.ContainsKey(itemType))
-    //    {
-    //        storageCounts[itemType] = count;
-    //    }
-    //    else
-    //    {
-    //        storageCounts.Add(itemType, count);
-    //    }
-    //}
 
     public void StorageGetItem(ItemTypes itemType)
     {
@@ -92,18 +79,6 @@ public class ResourcesController
         return storageCounts.ContainsKey(itemType) ? storageCounts[itemType] : 0;
     }
 
-    //public void SetPlayerCount(ItemTypes itemType, int count)
-    //{
-    //    if (playerCounts.ContainsKey(itemType))
-    //    {
-    //        playerCounts[itemType] = count;
-    //    }
-    //    else
-    //    {
-    //        playerCounts.Add(itemType, count);
-    //    }
-    //}
-
     public int GetPlayerCount(ItemTypes itemType)
     {
         return playerCounts.ContainsKey(itemType) ? playerCounts[itemType] : 0;
@@ -114,12 +89,6 @@ public class ResourcesController
         int total = playerCounts.Values.Sum();
         return total;
     }
-
-    //private int SetPlayerTotal()
-    //{
-    //    int total = playerCounts.Values.Sum();
-    //    return total;
-    //}
 
     public int GetPlayerMaxCapacity()
     {

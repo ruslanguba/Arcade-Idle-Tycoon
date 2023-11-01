@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class BuildingCreator : MonoBehaviour
 {
-    public List<ItemTypes> requiredResources = new List<ItemTypes>();
     [SerializeField] protected BuildingCanvasActivator canvas;
+    [SerializeField] protected ItemInboxStorage storage;
+    [SerializeField] protected UIBuildinCreator uiCreator;
     [SerializeField] protected GameObject building;
     [SerializeField] protected GameObject buildingBody;
     [SerializeField] int requiredResourcesCount;
+    public List<ItemTypes> requiredResources = new List<ItemTypes>();
     [SerializeField] protected List<int> currentResourcesCounts;
-    [SerializeField] protected ItemInboxStorage storage;
-    [SerializeField] protected UIBuildinCreator uiCreator;
+    private Dictionary<ItemTypes, int> requiredItemsDiff = new Dictionary<ItemTypes, int>();
     Coroutine buildingCreation;
 
-    [SerializeField] Dictionary<ItemTypes, int> Required = new Dictionary<ItemTypes, int>();
-    private Dictionary<ItemTypes, int> requiredItemsDiff = new Dictionary<ItemTypes, int>();
     protected virtual void Start()
     {
         InitializeRequiredResourcesCounts();
@@ -52,7 +51,6 @@ public class BuildingCreator : MonoBehaviour
         CalculateRequiredItemsDiff();
         return requiredItemsDiff;
     }
-
 
     public void GetItem(Item item)
     {
@@ -104,7 +102,6 @@ public class BuildingCreator : MonoBehaviour
         {
             buildingCreation = StartCoroutine(BuildingConstruction());
         }
-
     }
 
     IEnumerator BuildingConstruction()
@@ -121,7 +118,6 @@ public class BuildingCreator : MonoBehaviour
             yield return new WaitForSeconds(1);
             storage.UseItem(i);
             buildingBody.transform.localScale = Vector3.one * i * 0.2f;
-
         }
 
         gameObject.SetActive(false);

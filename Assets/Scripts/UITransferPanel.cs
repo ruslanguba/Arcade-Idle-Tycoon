@@ -14,7 +14,7 @@ public class UITransferPanel : MonoBehaviour
     [SerializeField] Text storageText;
     [SerializeField] Text playerCurrentCapacityText;
     [SerializeField] Slider slider;
-    public ItemTypes itemType; // задаем тип при нажатии на кнопки на панеле, передаем этот тип чтобы узнать какие ресы надо отправить
+    public ItemTypes itemType;
     int _inStorageCount;
     int _playerCurrentItemCount;
     int _playerMaxCapacity;
